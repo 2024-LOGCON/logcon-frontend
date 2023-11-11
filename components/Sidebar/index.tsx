@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import styled from "styled-components";
 
 export default function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const menuList = useMemo(
@@ -26,7 +27,11 @@ export default function Sidebar() {
 
   return (
     <>
-      <Wrapper>
+      <Background $isOpen={isOpen} onClick={() => setIsOpen(false)} />
+      <Wrapper $isOpen={isOpen}>
+        <HamburgerButton $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+          <HamburgerIcon src="/assets/icons/menu.svg" alt="Menu" />
+        </HamburgerButton>
         <TitleWrapper>
           <Link href={"/"}>
             <Logo src="/assets/logo.svg" alt="LOGCON" />
@@ -63,18 +68,69 @@ export default function Sidebar() {
   );
 }
 
-const Wrapper = styled.div`
+const Background = styled.div<{ $isOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  left: ${({ $isOpen }) => ($isOpen ? "0" : "-100%")};
+
+  width: 100%;
+  height: 100dvh;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+`;
+
+const Wrapper = styled.div<{ $isOpen: boolean }>`
   width: 256px;
   height: 994px;
-  padding: 44px 36px;
   border-radius: 16px;
+  position: relative;
+  padding: 44px 36px;
+
+  position: sticky;
+  top: 48px;
 
   border: 1px solid #4d403c;
   background-color: #241e1d;
 
+  margin-top: 48px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media (max-width: 1280px) {
+    margin-top: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    left: ${({ $isOpen }) => ($isOpen ? "0" : "-256px")};
+    transition: left 0.3s ease-in-out;
+
+    height: 100dvh;
+    border-radius: 0;
+    border: 0;
+    border-right: 1px solid #4d403c;
+  }
+`;
+
+const HamburgerButton = styled.button<{ $isOpen: boolean }>`
+  display: none;
+
+  @media (max-width: 1280px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 18px;
+    right: ${({ $isOpen }) => ($isOpen ? "18px" : "-40px")};
+  }
+`;
+
+const HamburgerIcon = styled.img`
+  width: 24px;
+  height: 24px;
 `;
 
 const TitleWrapper = styled.div`

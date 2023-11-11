@@ -38,9 +38,13 @@ export default function Signin() {
             </InputGroup>
 
             <InputGroup>
-              <Button style={{
-                borderRadius: 8
-              }}>로그인</Button>
+              <Button
+                style={{
+                  borderRadius: 8,
+                }}
+              >
+                로그인
+              </Button>
               <SignInWrapper>
                 <Link href="/signup">회원가입</Link>
               </SignInWrapper>

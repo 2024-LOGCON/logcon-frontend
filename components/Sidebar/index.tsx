@@ -81,25 +81,26 @@ const Background = styled.div<{ $isOpen: boolean }>`
 
 const Wrapper = styled.div<{ $isOpen: boolean }>`
   width: 256px;
-  height: 994px;
+  height: calc(100dvh - 96px);
   border-radius: 16px;
   position: relative;
   padding: 44px 36px;
 
   position: sticky;
   top: 48px;
+  bottom: 48px;
 
   border: 1px solid #4d403c;
   background-color: #241e1d;
 
-  margin-top: 48px;
+  margin: 48px 0;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   @media (max-width: 1280px) {
-    margin-top: 0;
+    margin: 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -172,7 +173,7 @@ const MenuWrapper = styled.div`
 `;
 
 const MenuItem = styled(Link)<{ $isSelected?: boolean }>`
-  color: ${({ $isSelected }) => ($isSelected ? "#F5E6E1" : "#B2A8A4")};
+  color: ${({ $isSelected }) => ($isSelected ? "#E5A692" : "#B2A8A4")};
   font-size: 18px;
   font-weight: 500;
   line-height: 150%;

@@ -4,6 +4,13 @@ import Content from "@/components/Content";
 
 export default function challenge() {
   const [isExpand, setIsExpand] = useState(false);
+  const [isDownload, setIsDownload] = useState(true);
+  const [isConnected, setIsConnected] = useState(true);
+  const [isSolved, setIsSolved] = useState(false);
+
+  const expand_less = '/assets/icons/expand_less.svg';
+  const expand_more = '/assets/icons/expand_more.svg';
+  const check = '/assets/icons/check.svg';
 
   const selectorList = ['All', 'Network', 'Server', 'Pwnable', 'Web', 'Reversing', 'Misc'];
 
@@ -22,72 +29,25 @@ export default function challenge() {
           <p>문제 목록</p>
           <Problem>
             <Header>
-              <Condition>문제 다운로드 + 접속 정보 연 상태</Condition>
+              <Condition>문제의 상태를 표시하는 곳</Condition>
               <Points>500 Points</Points>
             </Header>
-            <Detail>하는 무엇을 사는가 청춘의 소담스러운 착목한는 있는 끝에 만물은 그리하였는가? 공자는 청춘의 되는 따뜻한 전인 같은 있다. 
-                품었기 반짝이는 천고에 밝은 부패를 노년에게서 사막이다. 내려온 그들에게 앞이 무한한 있으랴? 설산에서 없으면, 
-                동력은 천고에 있을 긴지라 굳세게 열매를 생명을 황금시대다. 그러므로 이성은 구하지 희망의 원질이 그것을 작고 위하여 구하지 철환하였는가?</Detail>
+            <Detail>하는 무엇을 사는가 청춘의 소담스러운 착목한는 있는 끝에 만물은 그리하였는가? 공자는 청춘의 되는 따뜻한 전인 같은 있다. 품었기 반짝이는 천고에 밝은 부패를 노년에게서 사막이다. 내려온 그들에게 앞이 무한한 있으랴? 설산에서 없으면, 동력은 천고에 있을 긴지라 굳세게 열매를 생명을 황금시대다. 그러므로 이성은 구하지 희망의 원질이 그것을 작고 위하여 구하지 철환하였는가?</Detail>
             <Option>
               <ButtonContainer>
-                <Download><p>문제 다운로드</p><img src="/assets/icons/download.svg"/></Download>
-                <ConnectionInfo><p>접속 정보 보기</p><img src="/assets/icons/expand_less.svg"/></ConnectionInfo>
-                <Flag><textarea placeholder="FLAG"/><button>제출</button></Flag>
+                {isDownload === true &&
+                <Download><p>문제 다운로드</p><img src="/assets/icons/download.svg"/></Download>}
+                {isConnected === true &&
+                <ConnectionInfo
+                  $isExpand = {isExpand}
+                  onClick={() => setIsExpand(prevState => !prevState)}
+                ><p>접속 정보 보기</p>{isExpand ? <img src={expand_less}/> : <img src={expand_more}/>}</ConnectionInfo>}
+                <Flag>
+                {isSolved ? <textarea value="2시간 전에 풀이 완료" disabled/> : <textarea placeholder="FLAG"/>}
+                {isSolved ? <Check><img src={check} /></Check> : <Submit onClick={()=>setIsSolved(prevState => !prevState)}>제출</Submit>}
+                </Flag>
               </ButtonContainer>
-              <Connection><p>nc ctf.teamlog.kr 12345</p></Connection>
-            </Option>
-          </Problem>
-          <Problem>
-            <Header>
-              <Condition>접속 정보 닫은 상태</Condition>
-              <Points>500 Points</Points>
-            </Header>
-            <Detail>
-              하는 무엇을 사는가 청춘의 소담스러운 착목한는 있는 끝에 만물은 그리하였는가? 공자는 청춘의 되는 따뜻한 전인 같은 있다. 
-              품었기 반짝이는 천고에 밝은 부패를 노년에게서 사막이다. 내려온 그들에게 앞이 무한한 있으랴? 설산에서 없으면, 
-              동력은 천고에 있을 긴지라 굳세게 열매를 생명을 황금시대다. 그러므로 이성은 구하지 희망의 원질이 그것을 작고
-              위하여 구하지 철환하였는가?
-            </Detail>
-            <Option>
-              <ButtonContainer>
-                <ConnectionInfo><p>접속 정보 보기</p><img src="/assets/icons/expand_more.svg" /></ConnectionInfo>
-                <Flag><textarea placeholder="FLAG"/><button>제출</button></Flag>
-              </ButtonContainer>
-            </Option>
-          </Problem>
-          <Problem>
-            <Header>
-              <Condition>입력 창만 있는 상태</Condition>
-              <Points>500 Points</Points>
-            </Header>
-            <Detail>
-              하는 무엇을 사는가 청춘의 소담스러운 착목한는 있는 끝에 만물은 그리하였는가? 공자는 청춘의 되는 따뜻한 전인 같은 있다. 
-              품었기 반짝이는 천고에 밝은 부패를 노년에게서 사막이다. 내려온 그들에게 앞이 무한한 있으랴? 설산에서 없으면, 
-              동력은 천고에 있을 긴지라 굳세게 열매를 생명을 황금시대다. 그러므로 이성은 구하지 희망의 원질이 그것을 작고
-              위하여 구하지 철환하였는가?
-            </Detail>
-            <Option>
-              <ButtonContainer>
-                <Flag><textarea placeholder="FLAG"/><button>제출</button></Flag>
-              </ButtonContainer>
-            </Option>
-          </Problem>
-          <Problem>
-            <Header>
-              <Condition>이미 풀이 완료한 문제</Condition>
-              <Points>500 Points</Points>
-            </Header>
-            <Detail>
-              하는 무엇을 사는가 청춘의 소담스러운 착목한는 있는 끝에 만물은 그리하였는가? 공자는 청춘의 되는 따뜻한 전인 같은 있다. 
-              품었기 반짝이는 천고에 밝은 부패를 노년에게서 사막이다. 내려온 그들에게 앞이 무한한 있으랴? 설산에서 없으면, 
-              동력은 천고에 있을 긴지라 굳세게 열매를 생명을 황금시대다. 그러므로 이성은 구하지 희망의 원질이 그것을 작고
-              위하여 구하지 철환하였는가?
-            </Detail>
-            <Option>
-              <ButtonContainer>
-                <ConnectionInfo><p>접속 정보 보기</p><img src="/assets/icons/expand_more.svg"/></ConnectionInfo>
-                <Flag><textarea value="2시간 전에 풀이 완료"/><button><img src="/assets/icons/check.svg"/></button></Flag>
-              </ButtonContainer>
+              {isExpand === true && <Connection><p>nc ctf.teamlog.kr 12345</p></Connection>}
             </Option>
           </Problem>
         </List>
@@ -98,10 +58,10 @@ export default function challenge() {
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 48px 0px;
   flex-direction: column;
   align-items: center;
   gap: 48px;
+  padding: 48px 0px;
   flex: 1 0 0;
   align-self: stretch;
 `;
@@ -115,6 +75,7 @@ const Category = styled.div`
   
   p {
     align-self: stretch;
+
     color: var(--2024-logcon-70, #F5E6E1);
     font-family: Interop;
     font-size: 28px;
@@ -139,10 +100,10 @@ const SelectorItem = styled.button`
   padding: 12px 28px;
   justify-content: center;
   align-items: center;
+
   border-radius: 32px;
   border: 1px solid var(--2024-logcon-40, #3D3330);
   color: var(--2024-logcon-60, #D9CBC7);
-  /* transition: color 0.3s ease; */
 `;
 
 const List = styled.div`
@@ -154,6 +115,7 @@ const List = styled.div`
 
   p {
     align-self: stretch;
+
     color: var(--2024-logcon-70, #F5E6E1);
     font-family: Interop;
     font-size: 28px;
@@ -171,6 +133,7 @@ const Problem = styled.div`
   align-items: flex-start;
   gap: 24px;
   align-self: stretch;
+  
   border-radius: 16px;
   border: 1px solid var(--2024-logcon-40, #3D3330);
   background: var(--2024-logcon-20, #241E1D);
@@ -260,10 +223,12 @@ const ConnectionInfo = styled.button<{ $isExpand:boolean }>`
   align-items: center;
   gap: 8px;
   border-radius: 8px;
-  background: var(--2024-logcon-main, #E5A692);
+  background: ${({ $isExpand }) => ($isExpand ? "#E5A692" : "#3A312F")};
+  transition: background 0.2s, color 0.2s;
 
   p {
-    color: var(--2024-logcon-10, #1F1A18);
+    color: ${({ $isExpand }) => ($isExpand ? "#1F1A18" : "#D9CBC7")};
+    transition: background 0.2s, color 0.2s;
     font-family: Interop;
     font-size: 16px;
     font-style: normal;
@@ -302,23 +267,24 @@ const Flag = styled.div`
     line-height: 150%; /* 24px */
     letter-spacing: -0.32px;
   }
+`;
 
-  button {
-    display: flex;
-    width: 68px;
-    padding: 12px 20px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0px 8px 8px 0px;
-    background: var(--2024-logcon-main, #E5A692);
-    color: var(--2024-logcon-10, #1F1A18);
-    font-family: Interop;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 150%; /* 24px */
-    letter-spacing: -0.32px;
-  }
+const Submit = styled.button`
+  display: flex;
+  width: 68px;
+  padding: 12px 20px;
+  justify-content: center;
+  align-items: center;
+  
+  border-radius: 0px 8px 8px 0px;
+  background: var(--2024-logcon-main, #E5A692);
+  color: var(--2024-logcon-10, #1F1A18);
+  font-family: Interop;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 24px */
+  letter-spacing: -0.32px;
 `;
 
 const Connection = styled.div`
@@ -352,7 +318,7 @@ const Check = styled.button`
 
   img {
     width: 24px;
-  height: 24px;
+    height: 24px;
     flex-shrink: 0;
   }
 `;

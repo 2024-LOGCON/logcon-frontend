@@ -1,18 +1,35 @@
 import React, { useState } from 'react';
+import Link from "next/link";
 import styled from "styled-components";
 import Content from "@/components/Content";
+
+const categories = [
+
+  {name: 'All', path: 'all'}, 
+  {name: 'Network', path: 'network'}, 
+  {name:'Server' , path: 'server'}, 
+  {name:'Pwnable', path: 'pwnable'}, 
+  {name:'Web', path: 'web'}, 
+  {name:'Reversing', path: 'reversing'}, 
+  {name:'Misc', path: 'misc'}, 
+];
 
 export default function challenge() {
   const [isExpand, setIsExpand] = useState(false);
   const [isDownload, setIsDownload] = useState(true);
   const [isConnected, setIsConnected] = useState(true);
   const [isSolved, setIsSolved] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(false);
 
   const expand_less = '/assets/icons/expand_less.svg';
   const expand_more = '/assets/icons/expand_more.svg';
   const check = '/assets/icons/check.svg';
 
-  const selectorList = ['All', 'Network', 'Server', 'Pwnable', 'Web', 'Reversing', 'Misc'];
+  const handleCategories = (name) => {
+    if(selectedCategory === null || selectedCategory !== name) {
+      setSelectedCategory(name);
+    }
+  }
 
   return (
     <Content.Container>
@@ -20,8 +37,14 @@ export default function challenge() {
         <Category>
           <p>카테고리</p>
           <Selector>
-            {selectorList.map((item, index) => (
-              <SelectorItem key={index}>{item}</SelectorItem>
+            {categories.map(({name, path}, index) => (
+              <Link key={index} href={{ pathname: '/challenge', query: {category: path}}}>
+                <SelectorItem 
+                  $isSelected = {name === selectedCategory}
+                  onClick={()=>handleCategories(name)}>
+                  {name}
+                </SelectorItem>
+              </Link>
             ))}
           </Selector>
         </Category>
@@ -95,7 +118,7 @@ const Selector = styled.div`
   flex-wrap: wrap;
 `;
 
-const SelectorItem = styled.button`
+const SelectorItem = styled.button<{ $isSelected: boolean }>`
   display: flex;
   padding: 12px 28px;
   justify-content: center;
@@ -103,7 +126,9 @@ const SelectorItem = styled.button`
 
   border-radius: 32px;
   border: 1px solid var(--2024-logcon-40, #3D3330);
-  color: var(--2024-logcon-60, #D9CBC7);
+  color: ${({ $isSelected }) => ($isSelected ? "var(--2024-logcon-10, #1F1A18)" : "var(--2024-logcon-60, #D9CBC7)")};
+  background: ${({ $isSelected }) => ($isSelected ? "var(--2024-logcon-main, #E5A692)" : "var(--2024-logcon-40, #3D3330)")};
+  transition: color 0.2s, background 0.2s;
 `;
 
 const List = styled.div`
@@ -223,11 +248,11 @@ const ConnectionInfo = styled.button<{ $isExpand:boolean }>`
   align-items: center;
   gap: 8px;
   border-radius: 8px;
-  background: ${({ $isExpand }) => ($isExpand ? "#E5A692" : "#3A312F")};
+  background: ${({ $isExpand }) => ($isExpand ? "var(--2024-logcon-main, #E5A692)" : "var(--2024-logcon-30, #3A312F)")};
   transition: background 0.2s, color 0.2s;
 
   p {
-    color: ${({ $isExpand }) => ($isExpand ? "#1F1A18" : "#D9CBC7")};
+    color: ${({ $isExpand }) => ($isExpand ? "var(--2024-logcon-10, #1F1A18)" : "var(--2024-logcon-60, #D9CBC7)")};
     transition: background 0.2s, color 0.2s;
     font-family: Interop;
     font-size: 16px;
@@ -243,7 +268,7 @@ const ConnectionInfo = styled.button<{ $isExpand:boolean }>`
   }
 `;
 
-const Flag = styled.div`
+const Flag = styled.div<{ $isSolved:boolean }>`
   display: flex;
   align-items: flex-start;
   flex: 1 0 0;
@@ -259,7 +284,7 @@ const Flag = styled.div`
     resize: none;
     outline: none;
     border: none;
-    color: var(--2024-logcon-50, #B2A8A4);
+    color: ${({ $isSolved }) => ($isSolved ? "var(--2024-logcon-main, #E5A692)" : "var(--2024-logcon-50, #B2A8A4)")};
     font-family: Interop;
     font-size: 16px;
     font-style: normal;

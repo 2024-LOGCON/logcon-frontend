@@ -5413,6 +5413,7 @@ class CustomStatWatcher extends events.EventEmitter {
         : new StatEntry();
       return clearStats(statInstance);
     }
+    this.emit("stop" /* Stop */);
   }
   makeInterval(opts) {
     const interval = setInterval(() => {

@@ -144,7 +144,7 @@ const ProfileContentWrapper = styled.div`
   @media (max-width: 976px) {
     flex-direction: column;
 
-    gap: 8px;
+    gap: 16px;
   }
 `;
 
@@ -153,6 +153,10 @@ const ProfileLeftWrapper = styled.div`
   align-items: center;
 
   gap: 20px;
+
+  @media (max-width: 976px) {
+    width: 100%;
+  }
 `;
 
 const ProfileLogo = styled.img`
@@ -224,6 +228,10 @@ const ProfileRightTop = styled.button`
 
   cursor: pointer;
   gap: 8px;
+
+  @media (max-width: 976px) {
+    width: 100%;
+  }
 `;
 
 const ProfileRightTitle = styled(UserSchool)``;

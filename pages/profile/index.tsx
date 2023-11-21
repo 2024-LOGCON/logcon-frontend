@@ -1,7 +1,29 @@
 import Content from "@/components/Content";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import styled from "styled-components";
+interface User {
+  name: string;
+  id: string;
+  school: string;
+  points: number;
+  solved: number;
+}
 
 export default function Profile() {
+  const router = useRouter();
+
+  const [profile, setProfile] = useState<User>({
+    name: "김성빈",
+    id: "Plebea",
+    school: "선린인터넷고등학교",
+    points: 1400,
+    solved: 12,
+  });
+
+  const LogoutHandler = () => {
+    router.push("/");
+  };
   return (
     <>
       <Content.Container>
@@ -13,12 +35,12 @@ export default function Profile() {
                 <ProfileLogo src="/assets/icons/profile.svg" alt="profile" />
                 <ProfileLeftContentWrapper>
                   <ProfileLeftTop>
-                    <UserName>김성빈</UserName>
-                    <UserId>(plebea)</UserId>
+                    <UserName>{profile?.name}</UserName>
+                    <UserId>({profile?.id})</UserId>
                   </ProfileLeftTop>
                   <ProfileLeftBottom>
-                    <UserSchool>선린인터넷고등학교</UserSchool>
-                    <UserPoints>총 1400 Points</UserPoints>
+                    <UserSchool>{profile?.school}</UserSchool>
+                    <UserPoints>총 {profile?.points} Points</UserPoints>
                   </ProfileLeftBottom>
                 </ProfileLeftContentWrapper>
               </ProfileLeftWrapper>
@@ -31,7 +53,9 @@ export default function Profile() {
                   />
                 </ProfileRightTop>
                 <ProfileRightBottom>
-                  <ProfileRightTitle>로그아웃</ProfileRightTitle>
+                  <ProfileRightTitle onClick={LogoutHandler}>
+                    로그아웃
+                  </ProfileRightTitle>
                   <ProfileRightBottomLogo
                     src="/assets/icons/logout.svg"
                     alt="logout"
@@ -43,7 +67,7 @@ export default function Profile() {
           <SolvedProblem>
             <SolvedTitleWrapper>
               <SolvedTitle>푼 문제</SolvedTitle>
-              <SolvedCount>총 12개</SolvedCount>
+              <SolvedCount>총 {profile?.solved}개</SolvedCount>
             </SolvedTitleWrapper>
             <HeaderContainer>
               <HeaderSubContainer>

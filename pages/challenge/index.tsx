@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import styled from "styled-components";
 import Content from "@/components/Content";
 
 const categories = [
-
   {name: 'All', path: 'all'}, 
   {name: 'Network', path: 'network'}, 
   {name:'Server' , path: 'server'}, 
@@ -19,15 +18,23 @@ export default function challenge() {
   const [isDownload, setIsDownload] = useState(true);
   const [isConnected, setIsConnected] = useState(true);
   const [isSolved, setIsSolved] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const expand_less = '/assets/icons/expand_less.svg';
   const expand_more = '/assets/icons/expand_more.svg';
   const check = '/assets/icons/check.svg';
 
+  useEffect(() => {
+    const storedCategory = localStorage.getItem('selectedCategory');
+    if (storedCategory) {
+      setSelectedCategory(storedCategory);
+    }
+  }, []);
+
   const handleCategories = (name) => {
     if(selectedCategory === null || selectedCategory !== name) {
       setSelectedCategory(name);
+      localStorage.setItem('selectedCategory', name);
     }
   }
 
@@ -38,7 +45,7 @@ export default function challenge() {
           <p>카테고리</p>
           <Selector>
             {categories.map(({name, path}, index) => (
-              <Link key={index} href={{ pathname: '/challenge', query: {category: path}}}>
+              <Link key={index} href={{ pathname: '/challenge', query: { category: path }}}>
                 <SelectorItem 
                   $isSelected = {name === selectedCategory}
                   onClick={()=>handleCategories(name)}>

@@ -1,29 +1,26 @@
+import { logout } from "@/api/auth/logout";
 import Content from "@/components/Content";
+import { useUserInfo } from "@/hooks/user";
+import { userInfoState } from "@/store/user";
+import { formatDateString } from "@/utils/date";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-interface User {
-  name: string;
-  id: string;
-  school: string;
-  points: number;
-  solved: number;
-}
 
 export default function Profile() {
   const router = useRouter();
-
-  const [profile, setProfile] = useState<User>({
-    name: "김성빈",
-    id: "Plebea",
-    school: "선린인터넷고등학교",
-    points: 1400,
-    solved: 12,
-  });
+  const [userInfoData, setUserInfo] = useRecoilState(userInfoState);
+  const { data: userInfo } = useUserInfo();
 
   const LogoutHandler = () => {
-    router.push("/");
+    logout().then(() => {
+      router.push("/");
+      setUserInfo({ loaded: false });
+      localStorage.removeItem("accessToken");
+    });
   };
+
   return (
     <>
       <Content.Container>
@@ -35,12 +32,12 @@ export default function Profile() {
                 <ProfileLogo src="/assets/icons/profile.svg" alt="profile" />
                 <ProfileLeftContentWrapper>
                   <ProfileLeftTop>
-                    <UserName>{profile?.name}</UserName>
-                    <UserId>({profile?.id})</UserId>
+                    <UserName>{userInfo?.name}</UserName>
+                    <UserId>({userInfo?.id})</UserId>
                   </ProfileLeftTop>
                   <ProfileLeftBottom>
-                    <UserSchool>{profile?.school}</UserSchool>
-                    <UserPoints>총 {profile?.points} Points</UserPoints>
+                    <UserSchool>{userInfo?.school}</UserSchool>
+                    <UserPoints>총 {userInfo?.score} Points</UserPoints>
                   </ProfileLeftBottom>
                 </ProfileLeftContentWrapper>
               </ProfileLeftWrapper>
@@ -67,7 +64,9 @@ export default function Profile() {
           <SolvedProblem>
             <SolvedTitleWrapper>
               <SolvedTitle>푼 문제</SolvedTitle>
-              <SolvedCount>총 {profile?.solved}개</SolvedCount>
+              <SolvedCount>
+                총 {userInfo?.solves?.filter((solve) => solve.correct).length}개
+              </SolvedCount>
             </SolvedTitleWrapper>
             <HeaderContainer>
               <HeaderSubContainer>
@@ -80,37 +79,25 @@ export default function Profile() {
                 </HeaderWrapper>
               </HeaderSubContainer>
               <TableContainer>
-                <TableProblems>
-                  <TableProblemsInner>
-                    <TableProblemsName>이미 풀이 완료한 문제</TableProblemsName>
-                    <TableProblemsInterface>
-                      <TableProblemsTime>22.01.02 12:55</TableProblemsTime>
-                      <TableProblemsPoints>1600 Points</TableProblemsPoints>
-                    </TableProblemsInterface>
-                  </TableProblemsInner>
-                </TableProblems>
-                <TableProblems>
-                  <TableProblemsInner>
-                    <TableProblemsName>
-                      이미 풀이 완료한 문제2
-                    </TableProblemsName>
-                    <TableProblemsInterface>
-                      <TableProblemsTime>22.01.02 12:55</TableProblemsTime>
-                      <TableProblemsPoints>1600 Points</TableProblemsPoints>
-                    </TableProblemsInterface>
-                  </TableProblemsInner>
-                </TableProblems>
-                <TableProblems>
-                  <TableProblemsInner>
-                    <TableProblemsName>
-                      이미 풀이 완료한 문제3
-                    </TableProblemsName>
-                    <TableProblemsInterface>
-                      <TableProblemsTime>22.01.02 12:55</TableProblemsTime>
-                      <TableProblemsPoints>1600 Points</TableProblemsPoints>
-                    </TableProblemsInterface>
-                  </TableProblemsInner>
-                </TableProblems>
+                {userInfo?.solves
+                  ?.filter((solve) => solve.correct)
+                  .map((solve) => (
+                    <TableProblems key={solve.id}>
+                      <TableProblemsInner>
+                        <TableProblemsName>
+                          {solve?.challenge?.name}
+                        </TableProblemsName>
+                        <TableProblemsInterface>
+                          <TableProblemsTime>
+                            {formatDateString(solve?.challenge?.createdAt!)}
+                          </TableProblemsTime>
+                          <TableProblemsPoints>
+                            {solve?.challenge?.point} Points
+                          </TableProblemsPoints>
+                        </TableProblemsInterface>
+                      </TableProblemsInner>
+                    </TableProblems>
+                  ))}
               </TableContainer>
             </HeaderContainer>
           </SolvedProblem>

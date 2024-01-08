@@ -1,11 +1,18 @@
+import { publicRoute } from "@/constants/auth";
+import { useUserInfo } from "@/hooks/user";
+import { userInfoState } from "@/store/user";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+
+  const [userInfoData, setUserInfo] = useRecoilState(userInfoState);
+  const { data: userInfo } = useUserInfo();
 
   const menuList = useMemo(
     () => [
@@ -36,19 +43,25 @@ export default function Sidebar() {
           <Link href={"/"}>
             <Logo src="/assets/logo.svg" alt="LOGCON" />
           </Link>
-          <ProfileWrapper>
+          <ProfileWrapper href={userInfo?.name ? "/profile" : "/signin"}>
             <ProfileImage
               src="/assets/icons/dummy_profile.svg"
               alt="Profile Image"
             />
-            <p>김성빈</p>
+            <p>
+              {userInfoData?.loaded
+                ? userInfo?.name
+                : publicRoute.includes(router.pathname)
+                ? "로그인해주세요"
+                : "로딩중...."}
+            </p>
           </ProfileWrapper>
           <MenuWrapper>
             {menuList.map((menu, index) => (
               <MenuItem
                 $isSelected={router.pathname.includes(menu.path)}
                 key={index}
-                href={menu.path}
+                href={userInfo?.name ? menu.path : "/signin"}
               >
                 {menu.name}
               </MenuItem>
@@ -145,7 +158,7 @@ const Logo = styled.img`
   height: 40px;
 `;
 
-const ProfileWrapper = styled.div`
+const ProfileWrapper = styled(Link)`
   display: flex;
   align-items: center;
   gap: 12px;

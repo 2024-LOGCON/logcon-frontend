@@ -1,39 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Content from "@/components/Content";
+import NoticeAPI from "@/api/Notice";
+import { Notice as NoticeType } from "@/api/Notice/get";
+import { formatDateString } from "@/utils/date";
 
-const notices = [
-  { title: '오늘부터 팀로그가 정보보호과 동아리 전체를 흡수합니다',
-    date: '2020.01.02 12:41',
-    detail: '하는 무엇을 사는가 청춘의 소담스러운 착목한는 있는 끝에 만물은 그리하였는가? 공자는 청춘의 되는 따뜻한 전인 같은 있다. 품었기 반짝이는 천고에 밝은 부패를 노년에게서 사막이다. 내려온 그들에게 앞이 무한한 있으랴? 설산에서 없으면, 동력은 천고에 있을 긴지라 굳세게 열매를 생명을 황금시대다. 그러므로 이성은 구하지 희망의 원질이 그것을 작고 위하여 구하지 철환하였는가?'
-  },
-  { title: '오늘부터 팀로그가 정보보호과 동아리 전체를 흡수합니다!',
-    date: '2021.03.04 9:17',
-    detail: '하는 무엇을 사는가 청춘의 소담스러운 착목한는 있는 끝에 만물은 그리하였는가? 공자는 청춘의 되는 따뜻한 전인 같은 있다. 품었기 반짝이는 천고에 밝은 부패를 노년에게서 사막이다. 내려온 그들에게 앞이 무한한 있으랴? 설산에서 없으면, 동력은 천고에 있을 긴지라 굳세게 열매를 생명을 황금시대다. 그러므로 이성은 구하지 희망의 원질이 그것을 작고 위하여 구하지 철환하였는가?'
-  },
-  { title: '오늘부터 팀로그가 정보보호과 동아리 전체를 흡수합니다?',
-    date: '2022.05.08 3:55',
-    detail: '하는 무엇을 사는가 청춘의 소담스러운 착목한는 있는 끝에 만물은 그리하였는가? 공자는 청춘의 되는 따뜻한 전인 같은 있다. 품었기 반짝이는 천고에 밝은 부패를 노년에게서 사막이다. 내려온 그들에게 앞이 무한한 있으랴? 설산에서 없으면, 동력은 천고에 있을 긴지라 굳세게 열매를 생명을 황금시대다. 그러므로 이성은 구하지 희망의 원질이 그것을 작고 위하여 구하지 철환하였는가?'
-  },
-];
+export default function Notice() {
+  const [notices, setNotices] = useState<NoticeType[]>();
 
-export default function notice() {
+  useEffect(() => {
+    NoticeAPI.get().then((res) => {
+      setNotices(res.data);
+    });
+  }, []);
+
   return (
     <Content.Container>
       <List>
         <p>공지사항</p>
-        {notices.map((notice, index) => (
-          <Notice key={index}>
+        {notices?.map((notice, index) => (
+          <NoticeItem key={index}>
             <Header>
               <Title>{notice.title}</Title>
-              <Date>{notice.date}</Date>
+              <Date>{formatDateString(notice?.createdAt!)}</Date>
             </Header>
-            <Detail>{notice.detail}</Detail>
-          </Notice>
+            <Detail>{notice.description}</Detail>
+          </NoticeItem>
         ))}
       </List>
     </Content.Container>
-  )
+  );
 }
 
 const List = styled.div`
@@ -44,7 +40,7 @@ const List = styled.div`
   align-self: stretch;
 
   p {
-    color: #F5E6E1;
+    color: #f5e6e1;
     font-family: Interop;
     font-size: 28px;
     font-style: normal;
@@ -54,7 +50,7 @@ const List = styled.div`
   }
 `;
 
-const Notice = styled.div`
+const NoticeItem = styled.div`
   display: flex;
   padding: 32px;
   flex-direction: column;
@@ -63,8 +59,8 @@ const Notice = styled.div`
   align-self: stretch;
 
   border-radius: 12px;
-  border: 1px solid var(--2024-logcon-30, #3A312F);
-  background: #241E1D;
+  border: 1px solid var(--2024-logcon-30, #3a312f);
+  background: #241e1d;
 `;
 
 const Header = styled.div`
@@ -77,7 +73,7 @@ const Header = styled.div`
 const Title = styled.div`
   flex: 1 0 0;
 
-  color: #F5E6E1;
+  color: #f5e6e1;
   font-family: Interop;
   font-size: 24px;
   font-style: normal;
@@ -87,7 +83,7 @@ const Title = styled.div`
 `;
 
 const Date = styled.div`
-  color: #B2A8A4;
+  color: #b2a8a4;
   font-family: Interop;
   font-size: 16px;
   font-style: normal;
@@ -99,7 +95,7 @@ const Date = styled.div`
 const Detail = styled.div`
   align-self: stretch;
 
-  color: #D9CBC7;
+  color: #d9cbc7;
   font-family: Interop;
   font-size: 16px;
   font-style: normal;

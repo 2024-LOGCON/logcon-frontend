@@ -3,11 +3,30 @@ import Content from "@/components/Content";
 import InputBox from "@/components/Content/InputBox";
 import { useState } from "react";
 import Link from "next/link";
+import { login } from "@/api/auth/login";
+import { useRouter } from "next/router";
+import { userInfoState } from "@/store/user";
+import { useRecoilState } from "recoil";
 
 export default function Signin() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
+  const [userInfoData, setUserInfo] = useRecoilState(userInfoState);
+
+  const router = useRouter();
+
+  const handleSubmit = () => {
+    login({ id, password })
+      .then(() => {
+        setUserInfo({ loaded: true });
+        router.push("/challenge");
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("로그인에 실패했습니다.");
+      });
+  };
 
   return (
     <>
@@ -17,6 +36,7 @@ export default function Signin() {
           <FormWrapper
             onSubmit={(e) => {
               e.preventDefault();
+              handleSubmit();
             }}
           >
             <InputGroup>

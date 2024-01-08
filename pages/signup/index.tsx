@@ -2,6 +2,10 @@ import styled from "styled-components";
 import Content from "@/components/Content";
 import InputBox from "@/components/Content/InputBox";
 import { useState } from "react";
+import { register } from "@/api/auth/register";
+import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+import { userInfoState } from "@/store/user";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -13,7 +17,25 @@ export default function Signup() {
   const [visible, setVisible] = useState(false);
   const [checkVisible, setCheckVisible] = useState(false);
 
-  
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
+
+  const router = useRouter();
+
+  const handleSubmit = () => {
+    if (password !== checkPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    register({ id, password, school, name, email })
+      .then(() => router.push("/challenge"))
+      .catch((e) => {
+        console.log(e);
+        setUserInfo({ loaded: true });
+        alert("회원가입에 실패했습니다.");
+      });
+  };
+
   return (
     <>
       <Content.Container>
@@ -22,6 +44,7 @@ export default function Signup() {
           <FormWrapper
             onSubmit={(e) => {
               e.preventDefault();
+              handleSubmit();
             }}
           >
             <InputGroup>

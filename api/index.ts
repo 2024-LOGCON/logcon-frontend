@@ -27,7 +27,10 @@ async function refresh() {
   } catch (err: any) {
     if (err.response?.status === 401) {
       localStorage.setItem("accessToken", "");
-      if (window.location.pathname !== "/signin")
+      if (
+        window.location.pathname !== "/signin" &&
+        window.location.pathname !== "/signup"
+      )
         window.location.href = "/signin";
       throw new Error("Unauthorized");
     }

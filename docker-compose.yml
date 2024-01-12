@@ -5,5 +5,3 @@ services:
     build: .
     ports:
       - "3001:3000"
-    depends_on:
-      - db

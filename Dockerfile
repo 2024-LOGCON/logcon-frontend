@@ -3,6 +3,7 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY yarn.lock ./
 COPY .yarn ./.yarn
+COPY .yarnrc.yml ./
 RUN yarn 
 COPY . .
 RUN yarn build

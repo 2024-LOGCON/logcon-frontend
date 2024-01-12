@@ -37,6 +37,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:18.2.0"],\
           ["react-query", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:3.39.3"],\
+          ["react-toastify", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:9.1.3"],\
           ["recoil", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:0.7.7"],\
           ["socket.io-client", "npm:4.7.3"],\
           ["styled-components", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:6.1.1"],\
@@ -914,6 +915,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/client-only-npm-0.0.1-07d3e9505c-0c16bf660d.zip/node_modules/client-only/",\
         "packageDependencies": [\
           ["client-only", "npm:0.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["clsx", [\
+      ["npm:1.2.1", {\
+        "packageLocation": "./.yarn/cache/clsx-npm-1.2.1-77792dc182-5ded6f61f1.zip/node_modules/clsx/",\
+        "packageDependencies": [\
+          ["clsx", "npm:1.2.1"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -2620,6 +2630,7 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:18.2.0"],\
           ["react-query", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:3.39.3"],\
+          ["react-toastify", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:9.1.3"],\
           ["recoil", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:0.7.7"],\
           ["socket.io-client", "npm:4.7.3"],\
           ["styled-components", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:6.1.1"],\
@@ -3187,6 +3198,33 @@ const RAW_RUNTIME_STATE =
           "@types/react",\
           "react-dom",\
           "react-native",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-toastify", [\
+      ["npm:9.1.3", {\
+        "packageLocation": "./.yarn/cache/react-toastify-npm-9.1.3-2f82dd0b41-12667aa10e.zip/node_modules/react-toastify/",\
+        "packageDependencies": [\
+          ["react-toastify", "npm:9.1.3"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:9.1.3", {\
+        "packageLocation": "./.yarn/__virtual__/react-toastify-virtual-009f16291e/0/cache/react-toastify-npm-9.1.3-2f82dd0b41-12667aa10e.zip/node_modules/react-toastify/",\
+        "packageDependencies": [\
+          ["react-toastify", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:9.1.3"],\
+          ["@types/react", "npm:18.2.36"],\
+          ["@types/react-dom", "npm:18.2.14"],\
+          ["clsx", "npm:1.2.1"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:701a7891903dd9e18145903bf58f018872151840787e6f8cfe01e56a1c829fadcaab29a1788ac7ea065be8758f90df9c05070fa4b37fee553aa0f8e403940f63#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
           "react"\
         ],\
         "linkType": "HARD"\

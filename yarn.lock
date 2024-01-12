@@ -2104,7 +2104,7 @@ __metadata:
     recoil: "npm:^0.7.7"
     socket.io-client: "npm:^4.7.3"
     styled-components: "npm:^6.1.1"
-    typescript: "npm:^5.3.3"
+    typescript: "npm:4.4.3"
   languageName: unknown
   linkType: soft
 
@@ -3159,23 +3159,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.3.3":
-  version: 5.3.3
-  resolution: "typescript@npm:5.3.3"
+"typescript@npm:4.4.3":
+  version: 4.4.3
+  resolution: "typescript@npm:4.4.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 6e4e6a14a50c222b3d14d4ea2f729e79f972fa536ac1522b91202a9a65af3605c2928c4a790a4a50aa13694d461c479ba92cedaeb1e7b190aadaa4e4b96b8e18
+  checksum: 5db80d231e8501e74e1e5e0d4f21b8a56d3d883d696d17bc3605fbf2a1e5831bf88edf3e665cc4af40c5ae723874ee8c849978f4bf4866f01531f61e5bf1045b
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.3.3#optional!builtin<compat/typescript>":
-  version: 5.3.3
-  resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=29ae49"
+"typescript@patch:typescript@npm%3A4.4.3#optional!builtin<compat/typescript>":
+  version: 4.4.3
+  resolution: "typescript@patch:typescript@npm%3A4.4.3#optional!builtin<compat/typescript>::version=4.4.3&hash=bbeadb"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 57bf073a0b88f9bf76e5a24be3df864a8f9d0e70f8316969f4992ae26e30cb8d078708922da2ade1f2c8d1faee13b28bcb69876ebb1e37910e31c54aa9126aa2
+  checksum: b4c29868ff38a92cf60de2b717bc41a738299b3b0645b6deee6f6d401beac05ce7cb3417062ca30e710843924aa51d1cf6a022434a6feed1dfb197fba4139982
   languageName: node
   linkType: hard
 

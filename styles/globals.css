@@ -6,7 +6,8 @@
   font-family: Interop, sans-serif;
 }
 
-input {
+input,
+textarea {
   border: none;
   outline: none;
 }

@@ -62,6 +62,7 @@ export default function ChallengeEdit({ close, id }: Props) {
       ...connectionByType,
     };
     updateChallenge(data);
+    close();
   }
 
   function fileUpload(file: FormData) {

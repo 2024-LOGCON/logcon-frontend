@@ -33,21 +33,21 @@ export default function Scoreboard() {
             </ProblemWrapper>
             {scoreboard ? (
               <>
-                {scoreboard?.map((item, index) => (
-                  <TableWrapper
-                    key={index}
-                    style={{
-                      cursor: "pointer",
-                    }}
-                    onClick={() =>
-                      router.push({
-                        pathname: "/profile/[id]",
-                        query: { id: item.id },
-                      })
-                    }
-                  >
-                    <TableContentWrapper>
-                      <TableContent key={index}>
+                <TableWrapper>
+                  <TableContentWrapper>
+                    {scoreboard?.map((item, index) => (
+                      <TableContent
+                        key={index}
+                        style={{
+                          cursor: "pointer",
+                        }}
+                        onClick={() =>
+                          router.push({
+                            pathname: "/profile/[id]",
+                            query: { id: item.id },
+                          })
+                        }
+                      >
                         <TableSubContentLeft>
                           <TableContentLeftItems1 $rank={index + 1}>
                             {index + 1} 위
@@ -65,9 +65,9 @@ export default function Scoreboard() {
                           </TableContentRightItems2>
                         </TableSubContentRight>
                       </TableContent>
-                    </TableContentWrapper>
-                  </TableWrapper>
-                ))}
+                    ))}
+                  </TableContentWrapper>
+                </TableWrapper>
               </>
             ) : (
               <Loading />

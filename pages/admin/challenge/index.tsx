@@ -27,9 +27,9 @@ export default function AdminChallenge() {
                   setSelected(challenge.id);
                   setEditModal(true);
                 }}
-                key={challenge.id}
+                key={challenge?.id}
               >
-                {challenge.name}
+                {challenge?.name}
               </Button>
             ))}
           </Row>

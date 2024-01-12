@@ -28,7 +28,6 @@ export default function UserInfoRoot({ children }: Props) {
   useEffect(() => {
     const ws = socketInstance();
     ws.on("notice", (data) => {
-      console.log(data);
       toast("새로운 공지사항이 있습니다.");
       mutate();
     });

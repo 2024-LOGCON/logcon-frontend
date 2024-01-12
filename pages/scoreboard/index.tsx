@@ -32,40 +32,43 @@ export default function Scoreboard() {
               </HeaderWrapper>
             </ProblemWrapper>
             {scoreboard ? (
-              <TableWrapper
-                style={{
-                  cursor: "pointer",
-                }}
-                onClick={() =>
-                  router.push({
-                    pathname: "/profile/[id]",
-                    query: { id: scoreboard[0].id },
-                  })
-                }
-              >
-                <TableContentWrapper>
-                  {scoreboard?.map((item, index) => (
-                    <TableContent key={index}>
-                      <TableSubContentLeft>
-                        <TableContentLeftItems1 $rank={index + 1}>
-                          {index + 1} 위
-                        </TableContentLeftItems1>
-                        <TableContentLeftItems2>
-                          {item.name}
-                        </TableContentLeftItems2>
-                      </TableSubContentLeft>
-                      <TableSubContentRight>
-                        <TableContentRightItems1>
-                          {item.solves?.length}개
-                        </TableContentRightItems1>
-                        <TableContentRightItems2>
-                          {item.score} Points
-                        </TableContentRightItems2>
-                      </TableSubContentRight>
-                    </TableContent>
-                  ))}
-                </TableContentWrapper>
-              </TableWrapper>
+              <>
+                {scoreboard?.map((item, index) => (
+                  <TableWrapper
+                    key={index}
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() =>
+                      router.push({
+                        pathname: "/profile/[id]",
+                        query: { id: item.id },
+                      })
+                    }
+                  >
+                    <TableContentWrapper>
+                      <TableContent key={index}>
+                        <TableSubContentLeft>
+                          <TableContentLeftItems1 $rank={index + 1}>
+                            {index + 1} 위
+                          </TableContentLeftItems1>
+                          <TableContentLeftItems2>
+                            {item.name}
+                          </TableContentLeftItems2>
+                        </TableSubContentLeft>
+                        <TableSubContentRight>
+                          <TableContentRightItems1>
+                            {item.solves?.length}개
+                          </TableContentRightItems1>
+                          <TableContentRightItems2>
+                            {item.score} Points
+                          </TableContentRightItems2>
+                        </TableSubContentRight>
+                      </TableContent>
+                    </TableContentWrapper>
+                  </TableWrapper>
+                ))}
+              </>
             ) : (
               <Loading />
             )}

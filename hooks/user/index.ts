@@ -61,6 +61,9 @@ export function useUserInfoById(id: string) {
 
 export function useAdmin() {
   return useQuery("admin", async () => {
-    return (await authInstance().get("/admin")).data;
+    const res = await authInstance()
+      .get("/admin")
+      .catch(() => ({ statue: false }));
+    return res.data;
   });
 }

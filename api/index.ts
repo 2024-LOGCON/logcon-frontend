@@ -4,13 +4,9 @@ import { io } from "socket.io-client";
 export const socketInstance = () => {
   const instance = io(process.env.NEXT_PUBLIC_API_URL || "");
 
-  instance.on("connect", () => {
-    console.log("socket connected");
-  });
+  instance.on("connect", () => {});
 
-  instance.on("disconnect", () => {
-    console.log("socket disconnected");
-  });
+  instance.on("disconnect", () => {});
 
   return instance;
 };

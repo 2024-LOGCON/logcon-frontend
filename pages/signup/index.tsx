@@ -30,7 +30,6 @@ export default function Signup() {
     register({ id, password, school, name, email })
       .then(() => router.push("/challenge"))
       .catch((e) => {
-        console.log(e);
         setUserInfo({ loaded: true });
         alert("회원가입에 실패했습니다.");
       });

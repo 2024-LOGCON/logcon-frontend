@@ -42,7 +42,7 @@ export default function Signin() {
             <InputGroup>
               <InputBox
                 src="/assets/icons/account_circle.svg"
-                placeholder="아이디 혹은 이메일"
+                placeholder="아이디"
                 value={id}
                 onChange={(e) => setId(e.target.value)}
               />

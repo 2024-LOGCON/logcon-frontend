@@ -18,6 +18,7 @@ export default function UserInfoRoot({ children }: Props) {
   const { mutate } = useSyncNotice();
 
   useEffect(() => {
+    console.log(isAdmin?.status);
     if (isAdmin?.status === undefined) return;
     if (router.pathname.includes("admin") && !isAdmin?.status) {
       router.back();

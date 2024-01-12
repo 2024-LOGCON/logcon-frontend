@@ -12,7 +12,6 @@ export function useUserInfo() {
   const router = useRouter();
 
   return useQuery("userInfo", async () => {
-    console.log(userInfo.loaded, userInfo.id);
     if (
       (publicRoute.includes(router.pathname) && !userInfo.loaded) ||
       (publicRoute.includes(router.pathname) && userInfo?.id === null)
@@ -61,9 +60,11 @@ export function useUserInfoById(id: string) {
 
 export function useAdmin() {
   return useQuery("admin", async () => {
-    const res = await authInstance()
-      .get("/admin")
-      .catch(() => ({ data: { statue: false } }));
+    const res = await authInstance().get("/admin");
+
+    if (!res.data) {
+      return { status: false };
+    }
     return res.data;
   });
 }

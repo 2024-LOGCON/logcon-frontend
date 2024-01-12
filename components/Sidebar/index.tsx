@@ -42,8 +42,6 @@ export default function Sidebar() {
     [isAdmin?.status]
   );
 
-  console.log(isAdmin?.status);
-
   return (
     <>
       <Background $isOpen={isOpen} onClick={() => setIsOpen(false)} />

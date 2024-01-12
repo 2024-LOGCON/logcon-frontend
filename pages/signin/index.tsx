@@ -23,7 +23,6 @@ export default function Signin() {
         router.push("/challenge");
       })
       .catch((e) => {
-        console.log(e);
         alert("로그인에 실패했습니다.");
       });
   };

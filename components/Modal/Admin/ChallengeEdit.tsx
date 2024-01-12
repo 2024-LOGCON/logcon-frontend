@@ -129,7 +129,6 @@ export default function ChallengeEdit({ close, id }: Props) {
               value={connection}
               onChange={(event) => {
                 setConnection(event.target.value);
-                console.log(event.target.value);
               }}
               placeholder="접속 정보를 입력해주세요."
             />

@@ -1,11 +1,22 @@
 import Content from "@/components/Content";
+import Loading from "@/components/Loading";
+import { useScoreboard } from "@/hooks/scoreboard";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 export default function Scoreboard() {
+  const { data: scoreboard } = useScoreboard();
+
+  const router = useRouter();
+
   return (
     <>
       <Content.Container>
-        <Category>
+        <Category
+          style={{
+            padding: "48px 0",
+          }}
+        >
           <MainTitle>스코어보드</MainTitle>
           <MainWrapper>
             <ProblemWrapper>
@@ -20,22 +31,44 @@ export default function Scoreboard() {
                 </HeaderContentRight>
               </HeaderWrapper>
             </ProblemWrapper>
-            <TableWrapper>
-              <TableContentWrapper>
-                <TableContent>
-                  <TableSubContentLeft>
-                    <TableContentLeftItems1>1 위</TableContentLeftItems1>
-                    <TableContentLeftItems2>김성빈</TableContentLeftItems2>
-                  </TableSubContentLeft>
-                  <TableSubContentRight>
-                    <TableContentRightItems1>14개</TableContentRightItems1>
-                    <TableContentRightItems2>
-                      1400 Points
-                    </TableContentRightItems2>
-                  </TableSubContentRight>
-                </TableContent>
-              </TableContentWrapper>
-            </TableWrapper>
+            {scoreboard ? (
+              <TableWrapper
+                style={{
+                  cursor: "pointer",
+                }}
+                onClick={() =>
+                  router.push({
+                    pathname: "/profile/[id]",
+                    query: { id: scoreboard[0].id },
+                  })
+                }
+              >
+                <TableContentWrapper>
+                  {scoreboard?.map((item, index) => (
+                    <TableContent key={index}>
+                      <TableSubContentLeft>
+                        <TableContentLeftItems1 $rank={index + 1}>
+                          {index + 1} 위
+                        </TableContentLeftItems1>
+                        <TableContentLeftItems2>
+                          {item.name}
+                        </TableContentLeftItems2>
+                      </TableSubContentLeft>
+                      <TableSubContentRight>
+                        <TableContentRightItems1>
+                          {item.solves?.length}개
+                        </TableContentRightItems1>
+                        <TableContentRightItems2>
+                          {item.score} Points
+                        </TableContentRightItems2>
+                      </TableSubContentRight>
+                    </TableContent>
+                  ))}
+                </TableContentWrapper>
+              </TableWrapper>
+            ) : (
+              <Loading />
+            )}
           </MainWrapper>
         </Category>
       </Content.Container>
@@ -138,10 +171,6 @@ const TableContentWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   align-self: stretch;
-
-  padding: 12px 24px;
-
-  gap: 24px;
 `;
 
 const TableContent = styled.div`
@@ -149,6 +178,21 @@ const TableContent = styled.div`
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
+  padding: 12px 24px;
+
+  &:nth-child(odd) {
+    background-color: #241e1d;
+  }
+
+  &:first-child {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
 `;
 
 const TableSubContentLeft = styled.div`
@@ -165,8 +209,12 @@ const TableSubContentRight = styled(TableSubContentLeft)`
   max-width: 168px;
 `;
 
-const TableContentLeftItems1 = styled.p`
-  color: #d6b26e;
+const TableContentLeftItems1 = styled.p<{ $rank: number }>`
+  color: ${(props) =>
+    (props.$rank === 1 && "#d6b26e") ||
+    (props.$rank === 2 && "#B8B8B8") ||
+    (props.$rank === 3 && "#CDA681") ||
+    "#D9CBC7"};
 
   font-size: 16px;
   font-weight: 400;

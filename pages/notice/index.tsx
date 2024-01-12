@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Content from "@/components/Content";
-import NoticeAPI from "@/api/Notice";
-import { Notice as NoticeType } from "@/api/Notice/get";
 import { formatDateString } from "@/utils/date";
+import { useNotice } from "@/hooks/notice";
 
 export default function Notice() {
-  const [notices, setNotices] = useState<NoticeType[]>();
-
-  useEffect(() => {
-    NoticeAPI.get().then((res) => {
-      setNotices(res.data);
-    });
-  }, []);
+  const { data: notices } = useNotice();
 
   return (
     <Content.Container>
@@ -38,6 +31,8 @@ const List = styled.div`
   align-items: flex-start;
   gap: 24px;
   align-self: stretch;
+  width: 100%;
+  padding: 48px 0;
 
   p {
     color: #f5e6e1;

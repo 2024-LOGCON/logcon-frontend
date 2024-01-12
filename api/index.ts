@@ -15,10 +15,10 @@ export const socketInstance = () => {
   return instance;
 };
 
-export const apiInstance = () =>
+export const apiInstance = (withCredentials?: boolean) =>
   axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
-    withCredentials: true,
+    withCredentials: withCredentials ?? true,
     headers: {
       "Content-Type": "application/json",
     },
@@ -31,7 +31,8 @@ async function refresh() {
   } catch (err: any) {
     if (err.response?.status === 401) {
       localStorage.setItem("accessToken", "");
-      window.location.href = "/signin";
+      if (window.location.pathname !== "/signin")
+        window.location.href = "/signin";
       throw new Error("Unauthorized");
     }
   }
@@ -71,7 +72,7 @@ export const authInstance = (retry?: boolean) => {
     async (error: AxiosError) => {
       if (error.response?.status === 401) {
         return await refresh().then(async (res) => {
-          if (!retry) return error;
+          if (retry) return error;
           const data = await authInstance(true).request({
             method: originalRequest[0].method,
             url: originalRequest[0].url,

@@ -718,6 +718,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^1.1.1":
+  version: 1.2.1
+  resolution: "clsx@npm:1.2.1"
+  checksum: 5ded6f61f15f1fa0350e691ccec43a28b12fb8e64c8e94715f2a937bc3722d4c3ed41d6e945c971fc4dcc2a7213a43323beaf2e1c28654af63ba70c9968a8643
+  languageName: node
+  linkType: hard
+
 "color-convert@npm:^2.0.1":
   version: 2.0.1
   resolution: "color-convert@npm:2.0.1"
@@ -2085,6 +2092,7 @@ __metadata:
     react: "npm:^18"
     react-dom: "npm:^18"
     react-query: "npm:^3.39.3"
+    react-toastify: "npm:^9.1.3"
     recoil: "npm:^0.7.7"
     socket.io-client: "npm:^4.7.3"
     styled-components: "npm:^6.1.1"
@@ -2557,6 +2565,18 @@ __metadata:
     react-native:
       optional: true
   checksum: 17dc4eb75d2ebc262b685096dfaa203202a883ac43768d0faf80f3ad4bdf791dff0691569d6e8ec2ac81b9377c5477e0a1ebea9f51bae1482ca154f5dde50d2d
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^9.1.3":
+  version: 9.1.3
+  resolution: "react-toastify@npm:9.1.3"
+  dependencies:
+    clsx: "npm:^1.1.1"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 12667aa10e6cf3f74be2e3c704c2d5570dd7de66fff89ae38fbfab1122e9a9f632de1cb712fe44a9a60b8ecca7590578157cb4ca6c4e8105a8cf80936a94e181
   languageName: node
   linkType: hard
 

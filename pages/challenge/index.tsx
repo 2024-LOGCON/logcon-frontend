@@ -11,6 +11,7 @@ import { useChallenges, useSolveChallenge } from "@/hooks";
 import { useUserInfo } from "@/hooks/user";
 import Loading from "@/components/Loading";
 import Docker from "@/api/Docker";
+import { elapsedTime } from "@/utils/date";
 
 export default function Challenge() {
   const [isExpandList, setIsExpandList] = useState<{
@@ -192,13 +193,13 @@ export default function Challenge() {
                           ) ? (
                             <>
                               <textarea
-                                value={
+                                value={elapsedTime(
                                   userInfo?.solves?.find(
                                     (solve) =>
                                       solve.correct &&
                                       solve.challenge?.id === challenge.id
-                                  )?.createdAt
-                                }
+                                  )?.createdAt!
+                                )}
                                 disabled
                               />
                               <Check>

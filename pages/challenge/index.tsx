@@ -12,6 +12,7 @@ import { useUserInfo } from "@/hooks/user";
 import Loading from "@/components/Loading";
 import Docker from "@/api/Docker";
 import { elapsedTime } from "@/utils/date";
+import { AxiosError } from "axios";
 
 export default function Challenge() {
   const [isExpandList, setIsExpandList] = useState<{
@@ -36,9 +37,12 @@ export default function Challenge() {
   const check = "/assets/icons/check.svg";
 
   const handleSubmit = (id: string) => {
-    solveChallenge([id, flags[id]]).then(
-      (res) => !res.data?.correct && alert("오답입니다.")
-    );
+    solveChallenge([id, flags[id]]).then((res) => {
+      if ((res as any)?.response?.status === 400)
+        return alert("대회가 종료되었습니다.");
+
+      return !res.data?.correct && alert("오답입니다.");
+    });
   };
 
   useEffect(() => {

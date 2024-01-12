@@ -63,7 +63,7 @@ export function useAdmin() {
   return useQuery("admin", async () => {
     const res = await authInstance()
       .get("/admin")
-      .catch(() => ({ statue: false }));
+      .catch(() => ({ data: { statue: false } }));
     return res.data;
   });
 }

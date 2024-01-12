@@ -33,7 +33,6 @@ export default function Challenge({ close }: Props) {
   }, [categories]);
 
   function handleSubmit() {
-    console.log(category);
     if (!category) return;
 
     const connectionByType =
@@ -118,8 +117,8 @@ export default function Challenge({ close }: Props) {
           onChange={(event) => setCategory(event.target.value)}
         >
           {categories?.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
+            <option key={category?.id} value={category?.id}>
+              {category?.name}
             </option>
           ))}
         </Select>

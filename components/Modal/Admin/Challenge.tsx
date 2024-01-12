@@ -28,10 +28,6 @@ export default function Challenge({ close }: Props) {
   const [category, setCategory] = useState<string | undefined>("");
   const [connection, setConnection] = useState<string | undefined>(undefined);
 
-  useEffect(() => {
-    setCategory(categories?.[0].id);
-  }, [categories]);
-
   function handleSubmit() {
     if (!category) return;
 
@@ -113,7 +109,7 @@ export default function Challenge({ close }: Props) {
         />
         <Label>Category</Label>
         <Select
-          value={""}
+          value={category}
           onChange={(event) => setCategory(event.target.value)}
         >
           <option value={""}>선택해주세요.</option>

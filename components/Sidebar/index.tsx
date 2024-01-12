@@ -1,9 +1,9 @@
 import { publicRoute } from "@/constants/auth";
-import { useUserInfo } from "@/hooks/user";
+import { useAdmin, useUserInfo } from "@/hooks/user";
 import { userInfoState } from "@/store/user";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
@@ -14,23 +14,35 @@ export default function Sidebar() {
   const [userInfoData, setUserInfo] = useRecoilState(userInfoState);
   const { data: userInfo } = useUserInfo();
 
+  const { data: isAdmin } = useAdmin();
+
   const menuList = useMemo(
     () => [
       {
         name: "Challenge",
         path: "/challenge",
+        visible: true,
       },
       {
         name: "Scoreboard",
         path: "/scoreboard",
+        visible: true,
       },
       {
         name: "Notice",
         path: "/notice",
+        visible: true,
+      },
+      {
+        name: "Admin",
+        path: "/admin",
+        visible: isAdmin?.status,
       },
     ],
-    []
+    [isAdmin?.status]
   );
+
+  console.log(isAdmin?.status);
 
   return (
     <>
@@ -50,22 +62,27 @@ export default function Sidebar() {
             />
             <p>
               {userInfoData?.loaded
-                ? userInfo?.name
-                : publicRoute.includes(router.pathname)
-                ? "로그인해주세요"
+                ? userInfo?.name ?? "로그인해주세요"
                 : "로딩중...."}
             </p>
           </ProfileWrapper>
           <MenuWrapper>
-            {menuList.map((menu, index) => (
-              <MenuItem
-                $isSelected={router.pathname.includes(menu.path)}
-                key={index}
-                href={userInfo?.name ? menu.path : "/signin"}
-              >
-                {menu.name}
-              </MenuItem>
-            ))}
+            {menuList.map(
+              (menu, index) =>
+                menu.visible && (
+                  <MenuItem
+                    $isSelected={
+                      menu.name === "Admin"
+                        ? router.pathname.includes(menu.path)
+                        : router.pathname === menu.path
+                    }
+                    key={index}
+                    href={userInfo?.name ? menu.path : "/signin"}
+                  >
+                    {menu.name}
+                  </MenuItem>
+                )
+            )}
           </MenuWrapper>
         </TitleWrapper>
         <InformationWrapper>

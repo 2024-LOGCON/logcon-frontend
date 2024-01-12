@@ -45,6 +45,7 @@ export default function Challenge({ close }: Props) {
       type,
       ...{ connectionByType },
       categoryId: category,
+      file: file ? "https://cdn.plebea.com/" + file : undefined,
     };
     createChallenge(data);
     close();
@@ -53,6 +54,7 @@ export default function Challenge({ close }: Props) {
   function fileUpload(file: FormData) {
     uploadImage(file).then((res) => {
       setFile(res.location?.split("/")[1]);
+      alert("파일 업로드가 완료되었습니다.");
     });
   }
 
@@ -80,7 +82,6 @@ export default function Challenge({ close }: Props) {
             }}
             as={"input"}
             type="file"
-            accept="image/*"
             onChange={(e) => {
               const file = e.target.files?.[0];
               e.target.value = "";

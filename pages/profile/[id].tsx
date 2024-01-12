@@ -1,23 +1,20 @@
 import { logout } from "@/api/auth/logout";
 import Content from "@/components/Content";
 import Loading from "@/components/Loading";
-import { useUpdateUserInfo, useUserInfo } from "@/hooks/user";
+import { useUserInfo, useUserInfoById } from "@/hooks/user";
 import { userInfoState } from "@/store/user";
 import { formatDateString } from "@/utils/date";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
-export default function Profile() {
+export default function ProfileById() {
   const router = useRouter();
   const [userInfoData, setUserInfo] = useRecoilState(userInfoState);
-  const { data: userInfo } = useUserInfo();
-  const { mutate: updateUserInfo } = useUpdateUserInfo();
+  const { data: userInfo } = useUserInfoById(router.query.id as string);
 
   const [isEdit, setIsEdit] = useState(false);
-  const [editName, setEditName] = useState(userInfo?.name);
-  const [editSchool, setEditSchool] = useState(userInfo?.school);
 
   const LogoutHandler = () => {
     logout().then(() => {
@@ -26,19 +23,6 @@ export default function Profile() {
 
       localStorage.removeItem("accessToken");
     });
-  };
-
-  useEffect(() => {
-    if (isEdit) {
-      setEditName(userInfo?.name);
-      setEditSchool(userInfo?.school);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEdit]);
-
-  const submit = () => {
-    if (isEdit) updateUserInfo({ name: editName, school: editSchool });
-    setIsEdit(!isEdit);
   };
 
   return (
@@ -53,53 +37,15 @@ export default function Profile() {
                   <ProfileLogo src="/assets/icons/profile.svg" alt="profile" />
                   <ProfileLeftContentWrapper>
                     <ProfileLeftTop>
-                      {isEdit ? (
-                        <EditInput
-                          value={editName}
-                          onChange={(e) => setEditName(e.target.value)}
-                        />
-                      ) : (
-                        <UserName>{userInfo?.name}</UserName>
-                      )}
+                      <UserName>{userInfo?.name}</UserName>
                       <UserId>({userInfo?.id})</UserId>
                     </ProfileLeftTop>
                     <ProfileLeftBottom>
-                      {isEdit ? (
-                        <EditInputSchool
-                          value={editSchool}
-                          onChange={(e) => setEditSchool(e.target.value)}
-                        />
-                      ) : (
-                        <UserSchool>{userInfo?.school}</UserSchool>
-                      )}
+                      <UserSchool>{userInfo?.school}</UserSchool>
                       <UserPoints>총 {userInfo?.score} Points</UserPoints>
                     </ProfileLeftBottom>
                   </ProfileLeftContentWrapper>
                 </ProfileLeftWrapper>
-                <ProfileRightWrapper>
-                  <ProfileRightTop onClick={submit}>
-                    <ProfileRightTitle>
-                      프로필 {isEdit ? "저장" : "수정"}
-                    </ProfileRightTitle>
-                    <ProfileRightTopLogo
-                      src={
-                        isEdit
-                          ? "/assets/icons/check_dark.svg"
-                          : "/assets/icons/edit.svg"
-                      }
-                      alt="edit"
-                    />
-                  </ProfileRightTop>
-                  <ProfileRightBottom>
-                    <ProfileRightTitle onClick={LogoutHandler}>
-                      로그아웃
-                    </ProfileRightTitle>
-                    <ProfileRightBottomLogo
-                      src="/assets/icons/logout.svg"
-                      alt="logout"
-                    />
-                  </ProfileRightBottom>
-                </ProfileRightWrapper>
               </ProfileContentWrapper>
             </ProfileContainer>
             <SolvedProblem>
@@ -295,7 +241,7 @@ const ProfileRightTitle = styled(UserSchool)``;
 const ProfileRightBottom = styled(ProfileRightTop)``;
 
 const ProfileRightTopLogo = styled.img`
-  width: 16px;
+  width: auto;
 `;
 
 const ProfileRightBottomLogo = styled.img`
@@ -425,25 +371,3 @@ const TableProblemsInterface = styled.div`
 
 const TableProblemsTime = styled(HeaderInnerTime)``;
 const TableProblemsPoints = styled(HeaderInnerPoints)``;
-
-const EditInput = styled.input`
-  font-size: 28px;
-  font-weight: 600;
-  line-height: 150%;
-  color: #f5e6e1;
-  font-size: 24px;
-  letter-spacing: -0.48px;
-  padding: 0;
-  min-width: 0;
-  width: 300px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid #f5e6e1;
-`;
-
-const EditInputSchool = styled(EditInput)`
-  font-size: 16px;
-  letter-spacing: -0.32px;
-  width: 100%;
-  max-width: 300px;
-`;

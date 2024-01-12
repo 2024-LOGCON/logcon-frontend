@@ -56,7 +56,7 @@ export default function ChallengeEdit({ close, id }: Props) {
       name: name ? name : challenge.name,
       description: description ? description : challenge.description,
       type: type ? type : challenge.type,
-      file: file ? "https://cdn.plebea.com/upload/" + file : challenge.file,
+      file: file ? "https://cdn.plebea.com/" + file : challenge.file,
       visible: visible ? visible : challenge.visible,
       ...checkFlagNull,
       ...connectionByType,
@@ -67,6 +67,7 @@ export default function ChallengeEdit({ close, id }: Props) {
   function fileUpload(file: FormData) {
     uploadImage(file).then((res) => {
       setFile(res.location?.split("/")[1]);
+      alert("파일 업로드가 완료되었습니다.");
     });
   }
 

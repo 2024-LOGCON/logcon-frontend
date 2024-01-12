@@ -19,9 +19,15 @@ export interface Challenge {
   file: string;
   category: Category;
   createdAt: string;
+  imageId?: string;
 }
 
 export const get = async () => {
   const res = await authInstance().get<Challenge[]>("/challenge");
+  return res.data;
+};
+
+export const getById = async (id: string) => {
+  const res = await authInstance().get<Challenge>(`/challenge/${id}`);
   return res.data;
 };

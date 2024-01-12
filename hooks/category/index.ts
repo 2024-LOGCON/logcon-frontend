@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 
 export function useCategory() {
   return useQuery("category", async () => {
-    return await Category.get();
+    const res = await Category.get();
+    return res.data;
   });
 }

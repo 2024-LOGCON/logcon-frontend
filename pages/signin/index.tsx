@@ -19,7 +19,7 @@ export default function Signin() {
   const handleSubmit = () => {
     login({ id, password })
       .then(() => {
-        setUserInfo({ loaded: true });
+        setUserInfo({ loaded: true, id });
         router.push("/challenge");
       })
       .catch((e) => {

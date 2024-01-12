@@ -113,9 +113,10 @@ export default function Challenge({ close }: Props) {
         />
         <Label>Category</Label>
         <Select
-          value={category}
+          value={""}
           onChange={(event) => setCategory(event.target.value)}
         >
+          <option value={""}>선택해주세요.</option>
           {categories?.map((category) => (
             <option key={category?.id} value={category?.id}>
               {category?.name}

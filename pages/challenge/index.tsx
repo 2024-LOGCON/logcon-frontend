@@ -191,7 +191,16 @@ export default function Challenge() {
                               solve.challenge?.id === challenge.id
                           ) ? (
                             <>
-                              <textarea value="2시간 전에 풀이 완료" disabled />
+                              <textarea
+                                value={
+                                  userInfo?.solves?.find(
+                                    (solve) =>
+                                      solve.correct &&
+                                      solve.challenge?.id === challenge.id
+                                  )?.createdAt
+                                }
+                                disabled
+                              />
                               <Check>
                                 <img src={check} alt="체크" />
                               </Check>

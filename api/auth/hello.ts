@@ -7,6 +7,7 @@ export interface Solve {
   challenge?: Challenge;
   flag: string;
   correct: boolean;
+  createdAt?: string;
 }
 
 export interface UserInfo {
